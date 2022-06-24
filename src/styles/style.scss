@@ -1,0 +1,73 @@
+body {
+    background-color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.playingDiv {
+    margin: 0 auto;
+    background-color: black;
+    width: 500px;
+    min-height: 160px;
+    transition: 0.2s ease;
+    background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(17, 17, 17) 5%,
+                                        rgb(17, 17, 17) 95%, rgba(255,255,255,0) 95%);
+
+    .tableArea {
+        padding: 10px;
+        display: flex;
+    
+        .pic {
+            background-color: aqua;
+            height: 100px;
+            width: 100px;
+            margin: 10px;
+        }
+    
+        .list {
+            display: grid;
+            margin-left: 10px;
+            
+            .label {
+                margin-top: 5px;
+                color: white;
+                font-size: 20px;
+            }
+
+            .labelSecondary {
+                margin-top: 5px;
+                color: white;
+                font-size: 14px;
+            }
+
+            .expand {
+                color: white;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .tableArea:target + .listDiv {
+        height: 200px;
+    }
+
+    .listDiv {
+        margin-top: -11px;
+        height: 0px;
+        background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(17, 17, 17) 5%,
+                                        rgb(17, 17, 17) 95%, rgba(255,255,255,0) 95%);
+        transition: 0.5s ease;
+
+        .listLabel {
+            color: white;
+            margin-left: 18px;
+        }
+
+        .dataList{
+            list-style: none;
+
+            .listItem {
+                color: white;
+            }
+        }
+    }
+}
