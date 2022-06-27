@@ -1,16 +1,48 @@
 body {
-    background-color: white;
+    background-color: black;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.playingDiv {
+.addPalcoIcon {
+    color: white;
+    background-color: transparent;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.addPalcoIcon:hover {
+    background-color: grey;
+}
+
+.palcoDiv {
     margin: 0 auto;
+    margin-bottom: 20px;
     background-color: black;
     width: 500px;
     min-height: 160px;
     transition: 0.2s ease;
-    background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(17, 17, 17) 5%,
-                                        rgb(17, 17, 17) 95%, rgba(255,255,255,0) 95%);
+    background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(44, 44, 44) 5%,
+                                        rgb(43, 43, 43) 95%, rgba(255,255,255,0) 95%);
+    
+    .palcoLabel {
+        color: white;
+        margin-left: 45px;
+        margin-top: 10px;
+    }
+
+    .editPalcoIcon {
+        background-color: transparent;
+        border-style: none;
+        color: white;
+        font-weight: 900;
+        float: right;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .editPalcoIcon:hover {
+        background-color: grey;
+    }
 
     .tableArea {
         padding: 10px;
@@ -33,6 +65,19 @@ body {
                 font-size: 20px;
             }
 
+            .labelTocando {
+                margin-top: 5px;
+                color: white;
+                font-size: 16px;
+            }
+
+            .nextList {
+                color: white;
+                list-style: none;
+                margin-top: 70px;
+                margin-left: -160px;
+            }
+
             .labelSecondary {
                 margin-top: 5px;
                 color: white;
@@ -43,30 +88,18 @@ body {
                 color: white;
                 cursor: pointer;
             }
-        }
-    }
-
-    .tableArea:target + .listDiv {
-        height: 200px;
-    }
-
-    .listDiv {
-        margin-top: -11px;
-        height: 0px;
-        background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(17, 17, 17) 5%,
-                                        rgb(17, 17, 17) 95%, rgba(255,255,255,0) 95%);
-        transition: 0.5s ease;
-
-        .listLabel {
-            color: white;
-            margin-left: 18px;
-        }
-
-        .dataList{
-            list-style: none;
-
-            .listItem {
+            
+            .listLabel {
                 color: white;
+                margin-left: 18px;
+            }
+    
+            .dataList{
+                list-style: none;
+    
+                .listItem {
+                    color: white;
+                }
             }
         }
     }
