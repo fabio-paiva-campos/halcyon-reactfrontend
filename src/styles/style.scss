@@ -3,102 +3,155 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.addPalcoIcon {
-    color: white;
-    background-color: transparent;
-    font-size: 30px;
-    cursor: pointer;
-}
-
-.addPalcoIcon:hover {
-    background-color: grey;
-}
-
-.palcoDiv {
+.appDiv{
     margin: 0 auto;
-    margin-bottom: 20px;
-    background-color: black;
     width: 500px;
-    min-height: 160px;
-    transition: 0.2s ease;
-    background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(44, 44, 44) 5%,
-                                        rgb(43, 43, 43) 95%, rgba(255,255,255,0) 95%);
-    
-    .palcoLabel {
-        color: white;
-        margin-left: 45px;
-        margin-top: 10px;
-    }
 
-    .editPalcoIcon {
+    .addPalcoIcon {
+        color: white;
         background-color: transparent;
-        border-style: none;
-        color: white;
-        font-weight: 900;
-        float: right;
-        padding: 5px;
+        font-size: 30px;
         cursor: pointer;
+        border-style: none;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: -3px;
     }
 
-    .editPalcoIcon:hover {
-        background-color: grey;
+    .addPalcoIcon:hover {
+        background-color: rgb(45, 45, 45);
     }
 
-    .tableArea {
-        padding: 10px;
-        display: flex;
-    
-        .pic {
-            background-color: aqua;
-            height: 100px;
-            width: 100px;
-            margin: 10px;
-        }
-    
-        .list {
-            display: grid;
-            margin-left: 10px;
-            
-            .label {
-                margin-top: 5px;
+    .palcoDiv {
+        margin: 0 auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-color: black;
+        min-height: 160px;
+        transition: 0.2s ease;
+        background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(44, 44, 44) 5%,
+                                            rgb(43, 43, 43) 95%, rgba(255,255,255,0) 95%);
+        
+        .palcoLabelDiv{
+            padding-top: 10px;
+
+            .palcoLabel {
                 color: white;
+                margin-left: 45px;
+                font-weight: 600;
                 font-size: 20px;
             }
 
-            .labelTocando {
-                margin-top: 5px;
+            .editPalcoIcon {
+                background-color: transparent;
+                border-style: none;
                 color: white;
-                font-size: 16px;
-            }
-
-            .nextList {
-                color: white;
-                list-style: none;
-                margin-top: 70px;
-                margin-left: -160px;
-            }
-
-            .labelSecondary {
-                margin-top: 5px;
-                color: white;
-                font-size: 14px;
-            }
-
-            .expand {
-                color: white;
+                font-weight: 900;
+                float: right;
+                padding: 5px;
                 cursor: pointer;
             }
-            
-            .listLabel {
-                color: white;
-                margin-left: 18px;
+
+            .editPalcoIcon:hover {
+                background-color: rgb(68, 68, 68);
             }
-    
-            .dataList{
-                list-style: none;
-    
-                .listItem {
+        }
+
+        .tableArea {
+            padding: 10px;
+            display: flex;
+        
+            .pic {
+                background-color: white;
+                height: 100px;
+                width: 100px;
+                margin: 10px;
+            }
+        
+            .list {
+                display: grid;
+                margin-left: 10px;
+
+                .playingDiv {
+                    min-height: 50px;
+                    margin-top: 8px;
+                }
+                
+                .playingLabel {
+                    margin-top: 5px;
                     color: white;
+                    font-size: 20px;
+                }
+
+                .labelTocando {
+                    margin-top: 15px;
+                    color: white;
+                    font-size: 16px;
+                }
+
+                .nextList {
+                    color: white;
+                    list-style: none;
+                    margin-top: 70px;
+                    margin-left: -160px;
+                }
+
+                .labelSecondary {
+                    margin-top: 5px;
+                    color: white;
+                    font-size: 14px;
+                }
+
+                .expand {
+                    color: white;
+                    cursor: pointer;
+                }
+                
+                .listLabel {
+                    color: white;
+                    margin-left: 18px;
+                }
+        
+                .dataList{
+                    list-style: none;
+        
+                    .listItem {
+                        color: white;
+                    }
+                }
+
+                .addArtistaDiv {
+                    margin-left: -120px;
+
+                    .addArtista {
+                        background-color: transparent;
+                        color: white;
+                        border-style: none;
+                        cursor: pointer;
+                        float: left;
+                        padding: 10px;
+                    }
+
+                    .addArtista:hover {
+                        background-color: rgb(68, 68, 68);
+                    }
+
+                    .addArtistaArea {
+                        background-color: black;
+                        border-style: none;
+                        color: white;
+                    }
+
+                    .addArtistaButton {
+                        background-color: transparent;
+                        color: white;
+                        border-style: none;
+                        cursor: pointer;
+                    }
+
+                    .addArtistaButton:hover {
+                        background-color: rgb(68, 68, 68);
+                    }
                 }
             }
         }
