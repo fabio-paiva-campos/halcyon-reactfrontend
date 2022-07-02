@@ -7,7 +7,7 @@ export function createId() {
 const Context = createContext(!undefined)
 
 export function ContextWrap({children}) {
-    const [logged, setLogged] = useState(true)
+    const [logged, setLogged] = useState(false)
 
     return (
         <Context.Provider value = {[logged, setLogged]}>

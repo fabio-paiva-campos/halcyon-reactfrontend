@@ -80,7 +80,7 @@ function Palcos() {
 
     let artistaPos
 
-    if(artistas.length >= 0) {
+    if(artistas.length == 0) {
         artistaPos = 0
     } else {
         artistaPos = artistas.length + 1
@@ -95,22 +95,23 @@ function Palcos() {
   }
 
   function editArtistaAction(id){
-    let palcoValue = document.getElementById("editPalcoArea").value
+    let artistaValue = document.getElementById("editArtistaArea").value
+    let filaPosValue = document.getElementsByClassName("artistaPos").value
 
-    let palco = {palco: palcoValue}
+    let artista = {id: id, artista: artistaValue, filaPos: filaPosValue, tempo: 1}
 
-    PalcoService.updatePalco(palco, id)
-    setEditPalco(false)
+    ArtistaService.updateArtista(artista, id)
+    setEditArtista(false)
 
-    let palcosFinal = [...palcos]
-    palcosFinal.forEach((palco) => {
-        if(palco.id === id) {
-            palco.palco = palcoValue
+    let artistasFinal = [...artistas]
+    artistasFinal.forEach((artista) => {
+        if(artista.id === id) {
+            artista.artista = artistaValue
         }
     })
 
-    setPalcos(palcosFinal)
-    setEditPalco(false)
+    setArtistas(artistasFinal)
+    setEditArtista(false)
   }
 
   function deleteArtista(id){
@@ -154,26 +155,28 @@ function Palcos() {
             <div>
               <input id='editPalcoArea' defaultValue={p.palco}></input>
               <button onClick={() => (setEditPalco(true), editPalcoAction(p.id))}>✔</button>
-              <button onClick={() => (setEditPalco(false))}>X</button>
+              <button onClick={() => (setEditPalco(false))}>🗙</button>
             </div>
           ) : (
             <div className='palcoLabelDiv'>
               <label className='palcoLabel'>{p.palco}</label>
-              <button className='editPalcoIcon' onClick={() => (deletePalcoAction(p.id))}>X</button>
+              <button className='editPalcoIcon' onClick={() => (deletePalcoAction(p.id))}>🗙</button>
               <button className='editPalcoIcon' onClick={() => (setEditPalco(true), setSelectedPalco(p.id))}>🖊</button>
             </div>
           )}
           <div className='tableArea'>
-            <label className='pic'>pic</label>
+            <label className='pic'></label>
             <div className='list'>
               <div className='playingDiv'>
                 <label className='playingLabel'>Tocando agora</label>
                 <div>
                     {artistas.map((a) => {
                     if(a.palco.palco === p.palco && a.filaPos == 0) {
-                        return (
-                            <label key={a.id} className='labelTocando'>{a.artista}</label>
-                        )
+                      return (
+                        <div key={a.id} className='playingArtista'>{a.artista}
+                          <button className='artistaPos' value={a.filaPos + 1} onClick={() => (setSelectedArtista(a.id), editArtistaAction(a.id))}>⏷</button>
+                        </div>
+                      )
                     }
                     })}
                 </div>
@@ -182,18 +185,30 @@ function Palcos() {
                 {artistas.map((a) => {
                   if(a.palco.palco === p.palco && a.filaPos != 0) {
                     return (
-                        <li key={a.id} className='labelSecondary'>{a.artista}</li>
+                      <>
+                        {editArtista && selectedArtista === a.id ? (
+                          <input key={a.id} className='editArtista'>{a.artista}
+                            <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista))}>✔</button>
+                            <button className='artistaButton'  onClick={() => (setEditArtista(false))}>🗙</button>
+                          </input>
+                        ) : (
+                          <li key={a.id} className='labelSecondary'>{a.artista}
+                            <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>
+                            <button className='artistaButton' onClick={() => (setEditArtista(true), setSelectedArtista(a.id))}>🖊</button>
+                          </li>
+                        )}  
+                      </>
                     )
                   }
                 })}
               </ul>
               <div className='addArtistaDiv'>
                 {addArtista && selectedPalco === p.id ? (
-                    <div>
-                        <input id='addArtistaArea' className='addArtistaArea' placeholder='Nome do Artista'></input>
-                        <button className='addArtistaButton' onClick={() => (addArtistaAction(selectedPalco))}>✔</button>
-                        <button className='addArtistaButton'  onClick={() => (setAddArtista(false))}>X</button>
-                    </div>
+                  <div>
+                    <input id='addArtistaArea' className='addArtistaArea' placeholder='Nome do Artista'></input>
+                    <button className='addArtistaButton' onClick={() => (addArtistaAction(selectedPalco))}>✔</button>
+                    <button className='addArtistaButton'  onClick={() => (setAddArtista(false))}>🗙</button>
+                  </div>
                 ) : (
                     <button className='addArtista' onClick={() => (setAddArtista(true), setSelectedPalco(p.id))}>Adicionar Artista</button>
                 )}

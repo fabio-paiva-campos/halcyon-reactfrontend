@@ -1,14 +1,15 @@
-import Login from './components/login'
-import Palcos from './components/palcos'
-import { ContextWrap, useAppContext } from './hooks/context'
+import { ContextWrap } from './hooks/context'
+import Layout from './components/layout'
 import './styles/style.scss'
 
 function App() {
   return (
-    <div className='appDiv'>
-      <Palcos/>
-    </div>
-  )
+      <ContextWrap>
+        <div className='appDiv'>
+          <Layout/>
+        </div>
+      </ContextWrap>
+    )
 }
 
 export default App
