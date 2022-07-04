@@ -94,11 +94,17 @@ function Palcos() {
     artistas.push(artista)
   }
 
-  function editArtistaAction(id){
+  function editArtistaAction(id, filaPos, palcoId){
     let artistaValue = document.getElementById("editArtistaArea").value
-    let filaPosValue = document.getElementsByClassName("artistaPos").value
 
-    let artista = {id: id, artista: artistaValue, filaPos: filaPosValue, tempo: 1}
+    let palcoSelect = {}
+    palcos.map((palco) => {
+      if(palco.id === palcoId) {
+          return palcoSelect = {id: palco.id, palco: palco.palco}
+      }
+    })
+
+    let artista = {id: id, artista: artistaValue, filaPos: filaPos, tempo: 1, palco: palcoSelect}
 
     ArtistaService.updateArtista(artista, id)
     setEditArtista(false)
@@ -174,7 +180,7 @@ function Palcos() {
                     if(a.palco.palco === p.palco && a.filaPos == 0) {
                       return (
                         <div key={a.id} className='playingArtista'>{a.artista}
-                          <button className='artistaPos' value={a.filaPos + 1} onClick={() => (setSelectedArtista(a.id), editArtistaAction(a.id))}>⏷</button>
+                          <button className='artistaPos' onClick={() => (editArtistaAction(a.id, artistas.length + 1))}>⏷</button>
                         </div>
                       )
                     }
@@ -187,10 +193,11 @@ function Palcos() {
                     return (
                       <>
                         {editArtista && selectedArtista === a.id ? (
-                          <input key={a.id} className='editArtista'>{a.artista}
-                            <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista))}>✔</button>
+                          <div className='editArtistaDiv'>
+                            <input key={a.id} id='editArtistaArea' className='editArtistaArea' defaultValue={a.artista} autoFocus></input>
+                            <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista, a.filaPos, a.palco.id))}>✔</button>
                             <button className='artistaButton'  onClick={() => (setEditArtista(false))}>🗙</button>
-                          </input>
+                          </div>
                         ) : (
                           <li key={a.id} className='labelSecondary'>{a.artista}
                             <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>

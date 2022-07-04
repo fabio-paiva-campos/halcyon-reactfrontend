@@ -150,6 +150,18 @@ body {
                     .artistaButton:hover {
                         background-color: rgb(68, 68, 68);
                     }
+
+                    .editArtistaDiv {
+                        margin-top: 18px;
+                        margin-left: 5px;
+
+                        .editArtistaArea {
+                            color: white;
+                            font-size: 15px;
+                            background-color: rgb(68, 68, 68);
+                            border-style: none;
+                        }
+                    }
                 }
 
                 .expand {
