@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 function Login() {
     const [logged, setLogged] = useAppContext()
+    const [admin, setAdmin] = useAppContext()
     const [users, setUsers] = useState([])
 
     React.useEffect(() => {
@@ -19,6 +20,11 @@ function Login() {
             if(user.usuario === usuarioValue) {
                 if(user.senha === senhaValue) {
                     setLogged(true)
+                    if(user.papel.id === 1) {
+                        setAdmin(true)
+                    } else {
+                        setAdmin(false)
+                    }
                 } else {
                     alert("Senha incorreta")
                     console.log(user.senha)

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PalcoService from '../services/PalcoService';
 import ArtistaService from '../services/ArtistaService';
 import { createId } from '../functions/createId';
+import { useAppContext } from '../hooks/context';
 
 function Palcos() {
   const [palcos, setPalcos] = useState([])
@@ -12,6 +13,7 @@ function Palcos() {
   const [selectedPalco, setSelectedPalco] = useState(0)
   const [editArtista, setEditArtista] = useState(false)
   const [selectedArtista, setSelectedArtista] = useState(0)
+  const [admin, setAdmin] = useAppContext()
 
   useEffect(() => {
     PalcoService.getPalco().then((res) => {setPalcos(res.data)})
@@ -148,9 +150,9 @@ function Palcos() {
     <div>
       <button className='addPalcoIcon' onClick={() => (setAddPalco(!addPalco))}>+</button>
       {addPalco ? (
-        <div>
-          <input id='addPalcoArea' placeholder='Nome do Palco'></input>
-          <button onClick={() => (addPalcoAction())}>✔</button>
+        <div className='addPalcoDiv'>
+          <input id='addPalcoArea' className='addPalcoArea' placeholder='Nome do Palco'></input>
+          <button className='addPalcoIcon' onClick={() => (addPalcoAction())}>✔</button>
         </div>
       ) : (
         null
