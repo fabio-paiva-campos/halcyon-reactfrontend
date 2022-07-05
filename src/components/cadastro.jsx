@@ -47,16 +47,16 @@ function Cadastro() {
       papelSelect = {id: 2, papel: "Usuário"}
     }
 
-    let usuario = {id: id, senha:senhaValue, usuario: usuarioValue, papel: papelSelect}
+    let usuario = {id: id, senha: senhaValue, usuario: usuarioValue, papel: papelSelect}
 
     UsuarioService.updateUsuario(usuario, id)
     setEditUsuario(false)
 
     let usuariosFinal = [...usuarios]
     usuariosFinal.forEach((usuario) => {
-        if(usuario.id === id) {
-            usuario.usuario = usuarioValue
-        }
+      if(usuario.id === id) {
+          usuario.usuario = usuarioValue
+      }
     })
 
     setUsuarios(usuariosFinal)
