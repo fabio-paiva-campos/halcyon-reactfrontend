@@ -2,11 +2,14 @@ import React from 'react'
 import UsuarioService from '../services/UsuarioService';
 import { useAppContext } from '../hooks/context';
 import { useState } from 'react';
+import bcrypt from 'bcryptjs';
 
 function Login() {
     const [logged, setLogged] = useAppContext()
     const [admin, setAdmin] = useAppContext()
     const [users, setUsers] = useState([])
+
+    console.log(users)
 
     React.useEffect(() => {
         UsuarioService.getUsuario().then((res) => {setUsers(res.data)})
@@ -18,16 +21,10 @@ function Login() {
 
         users.forEach((user) => {
             if(user.usuario === usuarioValue) {
-                if(user.senha === senhaValue) {
+                if(bcrypt.compareSync(senhaValue, user.senha) === true) {
                     setLogged(true)
-                    if(user.papel.id === 1) {
-                        setAdmin(true)
-                    } else {
-                        setAdmin(false)
-                    }
                 } else {
                     alert("Senha incorreta")
-                    console.log(user.senha)
                 }
             } else {
                 alert("Usuário não existe")
@@ -41,10 +38,10 @@ function Login() {
                 <h2>Login:</h2>
                 <ul className = "loginForm">
                     <li>
-                        <input id = "loginInputUser" className='textArea' placeholder="Usuário" name="usuario" rows={1} autoFocus/>
+                        <input id = "loginInputUser" className='textArea' placeholder="Usuário" name="usuario" autoFocus />
                     </li>
                     <li>
-                        <input id = "loginInputPassword" className='textArea' type='password' placeholder="Senha" name="senha" rows={1}/>
+                        <input id = "loginInputPassword" className='textArea' type='password' placeholder="Senha" name="senha" />
                     </li>
                     <li>
                         <button className="loginButton" onClick={() => (logCheck())}>Entrar</button>

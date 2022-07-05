@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import UsuarioService from '../services/UsuarioService';
 import { createId } from '../functions/createId';
+import bcrypt from 'bcryptjs';
 
 function Cadastro() {
   const [usuarios, setUsuarios] = useState([])
@@ -14,8 +15,19 @@ function Cadastro() {
 
   function addUsuarioAction(){
     let usuarioValue = document.getElementById("addUsuarioArea").value
+    let senhaValue = document.getElementById("addSenhaArea").value
+    let papelValue = document.getElementById("usuarioPapel").value
 
-    let usuario = {usuario: usuarioValue}
+    let senhaCrypted = bcrypt.hashSync(senhaValue)
+
+    let papelSelect = {}
+    if (papelValue == "Administrador") {
+      papelSelect = {id: 1, papel: "Administrador"}
+    } else {
+      papelSelect = {id: 2, papel: "Usuário"}
+    }
+
+    let usuario = {senha: senhaCrypted, usuario: usuarioValue, papel: papelSelect}
 
     UsuarioService.createUsuario(usuario)
     setAddUsuario(false)
@@ -25,8 +37,17 @@ function Cadastro() {
 
   function editUsuarioAction(id){
     let usuarioValue = document.getElementById("editUsuarioArea").value
+    let senhaValue = document.getElementById("editSenhaArea").value
+    let papelValue = document.getElementById("usuarioPapel").value
 
-    let usuario = {usuario: usuarioValue}
+    let papelSelect = {}
+    if (papelValue == "Administrador") {
+      papelSelect = {id: 1, papel: "Administrador"}
+    } else {
+      papelSelect = {id: 2, papel: "Usuário"}
+    }
+
+    let usuario = {id: id, senha:senhaValue, usuario: usuarioValue, papel: papelSelect}
 
     UsuarioService.updateUsuario(usuario, id)
     setEditUsuario(false)
@@ -57,44 +78,49 @@ function Cadastro() {
   }
 
   return (
-    <div>
-        <div className="palcoDiv">
-          <div className='tableArea'>
-            <div className='list'>
-              <ul className='nextList'>
-                {usuarios.map((u) => {
-                    return (
-                      <>
-                        {editUsuario && selectedUsuario === u.id ? (
-                          <input key={u.id} className='editUsuarioArea'>{u.artista}
-                            <button className='artistaButton' onClick={() => (editUsuarioAction(selectedUsuario))}>✔</button>
-                            <button className='artistaButton'  onClick={() => (setEditUsuario(false))}>🗙</button>
-                          </input>
-                        ) : (
-                          <li key={u.id} className='labelSecondary'>{u.artista}
-                            <button className='artistaButton' onClick={() => (deleteUsuarioAction(a.id))}>🗙</button>
-                            <button className='artistaButton' onClick={() => (setEditUsuario(true), setSelectedUsuario(a.id))}>🖊</button>
-                          </li>
-                        )}  
-                      </>
-                    )
-                  }
-                )}
-              </ul>
-              <div className='addArtistaDiv'>
-                {addUsuario ? (
-                  <div>
-                    <input id='addUsuarioArea' className='addArtistaArea' placeholder='Usuario'></input>
-                    <button className='addArtistaButton' onClick={() => (addUsuarioAction(selectedPalco))}>✔</button>
-                    <button className='addArtistaButton'  onClick={() => (setAddUsuario(false))}>🗙</button>
-                  </div>
+    <div className='userDiv'>
+      <ul className='userList'>
+        {usuarios.map((u) => {
+            return (
+              <>
+                {editUsuario && selectedUsuario === u.id ? (
+                  <>
+                    <input id='editUsuarioArea' className='editUsuarioArea' defaultValue={u.usuario} autoFocus />
+                    <input type='password' id='editSenhaArea' className='editSenhaArea' />
+                    <select id='usuarioPapel'>
+                      <option value="Administrador">Administrador</option>
+                      <option value='Usuário'>Usuário</option>
+                    </select>
+                    <button className='usuarioButton' onClick={() => (editUsuarioAction(selectedUsuario))}>✔</button>
+                    <button className='usuarioButton'  onClick={() => (setEditUsuario(false))}>🗙</button>
+                  </>
                 ) : (
-                    <button className='addArtista' onClick={() => (setAddUsuario(true), setSelectedUsuario(p.id))}>Adicionar Usuario</button>
-                )}
-              </div>
-            </div>
+                  <li key={u.id} className='usuarioLabel'>{u.usuario}
+                    <button className='usuarioButton' onClick={() => (deleteUsuarioAction(u.id))}>🗙</button>
+                    <button className='usuarioButton' onClick={() => (setEditUsuario(true), setSelectedUsuario(u.id))}>🖊</button>
+                  </li>
+                )}  
+              </>
+            )
+          }
+        )}
+      </ul>
+      <div className='addUsuarioaDiv'>
+        {addUsuario ? (
+          <div>
+            <input id='addUsuarioArea' className='addUsuarioaArea' placeholder='Usuario'></input>
+            <input type='password' id='addSenhaArea' className='addSenhaArea' />
+              <select id='usuarioPapel'>
+                <option value="Administrador">Administrador</option>
+                <option value='Usuário'>Usuário</option>
+              </select>
+            <button className='addUsuarioButton' onClick={() => (addUsuarioAction())}>✔</button>
+            <button className='addUsuarioButton'  onClick={() => (setAddUsuario(false))}>🗙</button>
           </div>
-        </div>
+        ) : (
+            <button className='addUsuario' onClick={() => (setAddUsuario(true))}>Adicionar Usuario</button>
+        )}
+      </div>
     </div>
   )
 }

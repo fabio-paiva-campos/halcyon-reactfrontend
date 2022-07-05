@@ -96,12 +96,13 @@ function Palcos() {
     artistas.push(artista)
   }
 
-  function editArtistaAction(id, filaPos, palcoId){
+  function editArtistaAction(id, filaPos){
     let artistaValue = document.getElementById("editArtistaArea").value
+    let palcoValue = document.getElementById("artistaPalco").value
 
     let palcoSelect = {}
     palcos.map((palco) => {
-      if(palco.id === palcoId) {
+      if(palco.palco === palcoValue) {
           return palcoSelect = {id: palco.id, palco: palco.palco}
       }
     })
@@ -115,6 +116,7 @@ function Palcos() {
     artistasFinal.forEach((artista) => {
         if(artista.id === id) {
             artista.artista = artistaValue
+            artista.palco = palcoSelect
         }
     })
 
@@ -197,8 +199,13 @@ function Palcos() {
                         {editArtista && selectedArtista === a.id ? (
                           <div className='editArtistaDiv'>
                             <input key={a.id} id='editArtistaArea' className='editArtistaArea' defaultValue={a.artista} autoFocus></input>
-                            <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista, a.filaPos, a.palco.id))}>✔</button>
                             <button className='artistaButton'  onClick={() => (setEditArtista(false))}>🗙</button>
+                            <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista, a.filaPos, a.palco.id))}>✔</button>
+                            <select id='artistaPalco' className='artistaPalco'>
+                              {palcos.map((p) => { return (
+                                <option className='artistaPalcoOption' key={p.id}>{p.palco}</option>
+                              )})}
+                            </select>
                           </div>
                         ) : (
                           <li key={a.id} className='labelSecondary'>{a.artista}
