@@ -30,7 +30,9 @@ function Palcos() {
     PalcoService.createPalco(palco)
     setAddPalco(false)
 
-    palcos.push({id: createId, palco: palcoValue})
+    let palcosFinal = [...palcos]
+    palcosFinal.push(palco)
+    setPalcos(palcosFinal)
   }
 
   function editPalcoAction(id){
@@ -82,20 +84,14 @@ function Palcos() {
         }
     })
 
-    let artistaPos
-
-    if(artistas.length == 0) {
-        artistaPos = 0
-    } else {
-        artistaPos = artistas.length + 1
-    }
-
-    let artista = {artista: artistaValue, filaPos: artistaPos, tempo: 1, palco: palcoSelect}
+    let artista = {artista: artistaValue, filaPos: artistas.length + 1, tempo: 1, palco: palcoSelect}
 
     ArtistaService.createArtista(artista)
     setAddArtista(false)
 
-    artistas.push(artista)
+    let artistasFinal = [...artistas]
+    artistasFinal.push(artista)
+    setArtistas(artistasFinal)
   }
 
   function editArtistaAction(id, filaPos){
@@ -150,6 +146,38 @@ function Palcos() {
     }
   }
 
+  function artistaDown(id, artista, filaPos, tempo, palco) {
+    let newArtista = {artista: artista, filaPos: filaPos, tempo: tempo, palco: palco}
+    console.log(filaPos)
+
+    ArtistaService.updateArtista(artista, id)
+
+    let artistasFinal = [...artistas]
+    artistasFinal.forEach((artista) => {
+      if(artista.id === id) {
+        artista = newArtista
+      }
+    })
+
+    setArtistas(artistasFinal)
+  }
+
+  function artistaUp(id, artista, filaPos, tempo, palco) {
+    let newArtista = {artista: artista, filaPos: filaPos, tempo: tempo, palco: palco}
+    console.log(filaPos)
+
+    ArtistaService.updateArtista(artista, id)
+
+    let artistasFinal = [...artistas]
+    artistasFinal.forEach((artista) => {
+      if(artista.id === id) {
+        artista = newArtista
+      }
+    })
+
+    setArtistas(artistasFinal)
+  }
+
   return (
     <div>
       <button className='addPalcoIcon' onClick={() => (setAddPalco(!addPalco))}>+</button>
@@ -191,7 +219,7 @@ function Palcos() {
                         if(a.palco.palco === p.palco && a.filaPos == 0) {
                           return (
                             <div key={a.id} className='playingArtista'>{a.artista}
-                              <button className='artistaPos' onClick={() => (editArtistaAction(a.id, artistas.length + 1))}>⏷</button>
+                              <button className='artistaPos' onClick={() => (artistaDown(a.id, a.artista, a.filaPos + 1, a.tempo, a.palco))}>⏷</button>
                             </div>
                           )
                         }
@@ -218,6 +246,8 @@ function Palcos() {
                               <li key={a.id} className='labelSecondary'>{a.artista}
                                 <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>
                                 <button className='artistaButton' onClick={() => (setEditArtista(true), setSelectedArtista(a.id))}>🖊</button>
+                                <button className='artistaButton' onClick={() => (artistaDown(a.id, a.artista, a.filaPos + 1, a.tempo, a.palco))}>⏷</button>
+                                <button className='artistaButton' onClick={() => (artistaUp(a.id, a.artista, a.filaPos - 1, a.tempo, a.palco))}>🞁</button>
                               </li>
                             )}  
                           </>

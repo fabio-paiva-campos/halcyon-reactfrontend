@@ -46,6 +46,10 @@ function Login() {
                 if(bcrypt.compareSync(senhaValue, user.senha) === true) {
                     setLogged(true)
                     flag = true
+                    if(user.papel === {id: 1, papel: "Administrador"}) {
+                        setAdmin(true)
+                        console.log(admin)
+                    }
                 } else {
                     alert("Senha incorreta")
                     flag = true
