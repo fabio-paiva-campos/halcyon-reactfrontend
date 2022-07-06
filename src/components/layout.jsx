@@ -9,7 +9,7 @@ function Layout() {
     return (
         <>
             {logged ? (
-                <Cadastro/>
+                <Palcos/>
             ) : (
                 <Login/>
             )}

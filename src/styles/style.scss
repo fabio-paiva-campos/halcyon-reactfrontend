@@ -7,6 +7,45 @@ body {
     margin: 0 auto;
     width: 500px;
 
+    .loginContainer {
+        background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(44, 44, 44) 5%,
+                                            rgb(43, 43, 43) 95%, rgba(255,255,255,0) 95%);
+        padding: 20px;
+
+        .login {
+            .loginLabel {
+                color: white;
+                margin-left: 42px;
+            }
+
+            .loginForm {
+                list-style: none;
+
+                .textArea {
+                    background-color: black;
+                    padding: 5px;
+                    border-style: none;
+                    margin-bottom: 10px;
+                    color: white;
+                }
+
+                .loginButton {
+                    background-color: transparent;
+                    color: white;
+                    padding: 10px;
+                    font-size: 18px;
+                    border-style: none;
+                    cursor: pointer;
+                    transition: 0.2s ease;
+                }
+
+                .loginButton:hover {
+                    background-color: rgb(24, 24, 24);
+                }
+            }
+        }
+    }
+
     .addPalcoIcon {
         color: white;
         background-color: transparent;
@@ -16,9 +55,25 @@ body {
         padding-left: 10px;
         padding-right: 10px;
         margin-left: -3px;
+        transition: 0.2s ease;
     }
 
     .addPalcoIcon:hover {
+        background-color: rgb(45, 45, 45);
+    }
+
+    .toggle {
+        float: right;
+        background-color: transparent;
+        border-style: none;
+        color: white;
+        cursor: pointer;
+        transition: 0.2s ease;
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .toggle:hover {
         background-color: rgb(45, 45, 45);
     }
 
@@ -206,11 +261,6 @@ body {
                         }
                     }
                 }
-
-                .expand {
-                    color: white;
-                    cursor: pointer;
-                }
                 
                 .listLabel {
                     color: white;
@@ -262,6 +312,126 @@ body {
         }
     }
     .userDiv {
-        background-color: grey;
+        background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(44, 44, 44) 5%,
+                                            rgb(43, 43, 43) 95%, rgba(255,255,255,0) 95%);
+        padding: 20px;
+        margin-top: 20px;
+
+        .usersLabel {
+            color: white;
+        }
+
+        .userList {
+            list-style: none;
+            margin-left: -38px;
+
+            .usuarioLabel {
+                color: white;
+                margin-top: 10px;
+            }
+
+            .usuarioButton {
+                float: right;
+                background-color: transparent;
+                color: white;
+                padding: 5px;
+                border-style: none;
+                cursor: pointer;
+                font-size: 18px;
+                margin-top: -5px;
+                margin-right: 5px;
+            }
+
+            .usuarioButton:hover {
+                background-color: rgb(68, 68, 68);
+            }
+
+            .editUsuarioArea {
+                background-color: black;
+                border-style: none;
+                color: white;
+                padding: 5px;
+                width: 90%;
+                margin-bottom: 10px;
+            }
+
+            .usuarioPapel {
+                background-color: black;
+                padding: 5px;
+                border-style: none;
+                color: white;
+            }
+
+            .usuarioPapel:hover {
+                background-color: rgb(68, 68, 68);
+            }
+
+            .usuarioButton {
+                float: right;
+                background-color: transparent;
+                color: white;
+                padding: 10px;
+                border-style: none;
+                cursor: pointer;
+                font-size: 18px;
+                margin-top: -5px;
+                margin-right: 5px;
+            }
+
+            .usuarioButton:hover {
+                background-color: rgb(68, 68, 68);
+            }
+        }
+
+        .addUsuarioDiv {
+            .addUsuario {
+                background-color: transparent;
+                border-style: none;
+                color: white;
+                cursor: pointer;
+                padding: 10px;
+                transition: 0.2s ease;
+            }
+
+            .addUsuario:hover {
+                background-color: rgb(68, 68, 68);
+            }
+
+            .addUsuarioArea {
+                background-color: black;
+                border-style: none;
+                color: white;
+                padding: 5px;
+                width: 90%;
+                margin-bottom: 10px;
+            }
+
+            .usuarioPapel {
+                background-color: black;
+                padding: 5px;
+                border-style: none;
+                color: white;
+            }
+
+            .usuarioPapel:hover {
+                background-color: rgb(68, 68, 68);
+            }
+
+            .addUsuarioButton {
+                float: right;
+                background-color: transparent;
+                color: white;
+                padding: 10px;
+                border-style: none;
+                cursor: pointer;
+                font-size: 18px;
+                margin-top: -5px;
+                margin-right: 5px;
+            }
+
+            .addUsuarioButton:hover {
+                background-color: rgb(68, 68, 68);
+            }
+        }
     }
 }

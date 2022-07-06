@@ -3,6 +3,7 @@ import PalcoService from '../services/PalcoService';
 import ArtistaService from '../services/ArtistaService';
 import { createId } from '../functions/createId';
 import { useAppContext } from '../hooks/context';
+import Cadastro from './cadastro';
 
 function Palcos() {
   const [palcos, setPalcos] = useState([])
@@ -14,6 +15,7 @@ function Palcos() {
   const [editArtista, setEditArtista] = useState(false)
   const [selectedArtista, setSelectedArtista] = useState(0)
   const [admin, setAdmin] = useAppContext()
+  const [cadastro, setCadastro] = useState(false)
 
   useEffect(() => {
     PalcoService.getPalco().then((res) => {setPalcos(res.data)})
@@ -159,80 +161,87 @@ function Palcos() {
       ) : (
         null
       )}
-      {palcos.map((p) => {return(
-        <div key={p.id} className="palcoDiv">
-          {editPalco && selectedPalco === p.id ? (
-            <div>
-              <input id='editPalcoArea' defaultValue={p.palco}></input>
-              <button onClick={() => (setEditPalco(true), editPalcoAction(p.id))}>✔</button>
-              <button onClick={() => (setEditPalco(false))}>🗙</button>
-            </div>
-          ) : (
-            <div className='palcoLabelDiv'>
-              <label className='palcoLabel'>{p.palco}</label>
-              <button className='editPalcoIcon' onClick={() => (deletePalcoAction(p.id))}>🗙</button>
-              <button className='editPalcoIcon' onClick={() => (setEditPalco(true), setSelectedPalco(p.id))}>🖊</button>
-            </div>
-          )}
-          <div className='tableArea'>
-            <label className='pic'></label>
-            <div className='list'>
-              <div className='playingDiv'>
-                <label className='playingLabel'>Tocando agora</label>
+      <button  className='toggle' onClick={() => (setCadastro(!cadastro))}>Usuários</button>
+      {cadastro ? (
+        <Cadastro/>
+      ) : (
+        <div>
+          {palcos.map((p) => {return(
+            <div key={p.id} className="palcoDiv">
+              {editPalco && selectedPalco === p.id ? (
                 <div>
+                  <input id='editPalcoArea' defaultValue={p.palco}></input>
+                  <button onClick={() => (setEditPalco(true), editPalcoAction(p.id))}>✔</button>
+                  <button onClick={() => (setEditPalco(false))}>🗙</button>
+                </div>
+              ) : (
+                <div className='palcoLabelDiv'>
+                  <label className='palcoLabel'>{p.palco}</label>
+                  <button className='editPalcoIcon' onClick={() => (deletePalcoAction(p.id))}>🗙</button>
+                  <button className='editPalcoIcon' onClick={() => (setEditPalco(true), setSelectedPalco(p.id))}>🖊</button>
+                </div>
+              )}
+              <div className='tableArea'>
+                <label className='pic'></label>
+                <div className='list'>
+                  <div className='playingDiv'>
+                    <label className='playingLabel'>Tocando agora</label>
+                    <div>
+                        {artistas.map((a) => {
+                        if(a.palco.palco === p.palco && a.filaPos == 0) {
+                          return (
+                            <div key={a.id} className='playingArtista'>{a.artista}
+                              <button className='artistaPos' onClick={() => (editArtistaAction(a.id, artistas.length + 1))}>⏷</button>
+                            </div>
+                          )
+                        }
+                        })}
+                    </div>
+                  </div>
+                  <ul className='nextList'>Próximos
                     {artistas.map((a) => {
-                    if(a.palco.palco === p.palco && a.filaPos == 0) {
-                      return (
-                        <div key={a.id} className='playingArtista'>{a.artista}
-                          <button className='artistaPos' onClick={() => (editArtistaAction(a.id, artistas.length + 1))}>⏷</button>
-                        </div>
-                      )
-                    }
+                      if(a.palco.palco === p.palco && a.filaPos != 0) {
+                        return (
+                          <>
+                            {editArtista && selectedArtista === a.id ? (
+                              <div className='editArtistaDiv'>
+                                <input key={a.id} id='editArtistaArea' className='editArtistaArea' defaultValue={a.artista} autoFocus></input>
+                                <button className='artistaButton'  onClick={() => (setEditArtista(false))}>🗙</button>
+                                <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista, a.filaPos, a.palco.id))}>✔</button>
+                                <select id='artistaPalco' className='artistaPalco'>
+                                  {palcos.map((p) => { return (
+                                    <option className='artistaPalcoOption' key={p.id}>{p.palco}</option>
+                                  )})}
+                                </select>
+                              </div>
+                            ) : (
+                              <li key={a.id} className='labelSecondary'>{a.artista}
+                                <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>
+                                <button className='artistaButton' onClick={() => (setEditArtista(true), setSelectedArtista(a.id))}>🖊</button>
+                              </li>
+                            )}  
+                          </>
+                        )
+                      }
                     })}
+                  </ul>
+                  <div className='addArtistaDiv'>
+                    {addArtista && selectedPalco === p.id ? (
+                      <div>
+                        <input id='addArtistaArea' className='addArtistaArea' placeholder='Nome do Artista'></input>
+                        <button className='addArtistaButton' onClick={() => (addArtistaAction(selectedPalco))}>✔</button>
+                        <button className='addArtistaButton'  onClick={() => (setAddArtista(false))}>🗙</button>
+                      </div>
+                    ) : (
+                        <button className='addArtista' onClick={() => (setAddArtista(true), setSelectedPalco(p.id))}>Adicionar Artista</button>
+                    )}
+                  </div>
                 </div>
               </div>
-              <ul className='nextList'>Próximos
-                {artistas.map((a) => {
-                  if(a.palco.palco === p.palco && a.filaPos != 0) {
-                    return (
-                      <>
-                        {editArtista && selectedArtista === a.id ? (
-                          <div className='editArtistaDiv'>
-                            <input key={a.id} id='editArtistaArea' className='editArtistaArea' defaultValue={a.artista} autoFocus></input>
-                            <button className='artistaButton'  onClick={() => (setEditArtista(false))}>🗙</button>
-                            <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista, a.filaPos, a.palco.id))}>✔</button>
-                            <select id='artistaPalco' className='artistaPalco'>
-                              {palcos.map((p) => { return (
-                                <option className='artistaPalcoOption' key={p.id}>{p.palco}</option>
-                              )})}
-                            </select>
-                          </div>
-                        ) : (
-                          <li key={a.id} className='labelSecondary'>{a.artista}
-                            <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>
-                            <button className='artistaButton' onClick={() => (setEditArtista(true), setSelectedArtista(a.id))}>🖊</button>
-                          </li>
-                        )}  
-                      </>
-                    )
-                  }
-                })}
-              </ul>
-              <div className='addArtistaDiv'>
-                {addArtista && selectedPalco === p.id ? (
-                  <div>
-                    <input id='addArtistaArea' className='addArtistaArea' placeholder='Nome do Artista'></input>
-                    <button className='addArtistaButton' onClick={() => (addArtistaAction(selectedPalco))}>✔</button>
-                    <button className='addArtistaButton'  onClick={() => (setAddArtista(false))}>🗙</button>
-                  </div>
-                ) : (
-                    <button className='addArtista' onClick={() => (setAddArtista(true), setSelectedPalco(p.id))}>Adicionar Artista</button>
-                )}
-              </div>
             </div>
-          </div>
+          )})}
         </div>
-      )})}
+      )}
     </div>
   )
 }

@@ -40,6 +40,8 @@ function Cadastro() {
     let senhaValue = document.getElementById("editSenhaArea").value
     let papelValue = document.getElementById("usuarioPapel").value
 
+    let senhaCrypted = bcrypt.hashSync(senhaValue)
+
     let papelSelect = {}
     if (papelValue == "Administrador") {
       papelSelect = {id: 1, papel: "Administrador"}
@@ -47,7 +49,7 @@ function Cadastro() {
       papelSelect = {id: 2, papel: "Usuário"}
     }
 
-    let usuario = {id: id, senha: senhaValue, usuario: usuarioValue, papel: papelSelect}
+    let usuario = {id: id, senha: senhaCrypted, usuario: usuarioValue, papel: papelSelect}
 
     UsuarioService.updateUsuario(usuario, id)
     setEditUsuario(false)
@@ -79,6 +81,7 @@ function Cadastro() {
 
   return (
     <div className='userDiv'>
+      <h3 className='usersLabel'>Usuários</h3>
       <ul className='userList'>
         {usuarios.map((u) => {
             return (
@@ -86,8 +89,8 @@ function Cadastro() {
                 {editUsuario && selectedUsuario === u.id ? (
                   <>
                     <input id='editUsuarioArea' className='editUsuarioArea' defaultValue={u.usuario} autoFocus />
-                    <input type='password' id='editSenhaArea' className='editSenhaArea' />
-                    <select id='usuarioPapel'>
+                    <input type='password' id='editSenhaArea' className='editUsuarioArea' />
+                    <select id='usuarioPapel' className='usuarioPapel'>
                       <option value="Administrador">Administrador</option>
                       <option value='Usuário'>Usuário</option>
                     </select>
@@ -105,17 +108,17 @@ function Cadastro() {
           }
         )}
       </ul>
-      <div className='addUsuarioaDiv'>
+      <div className='addUsuarioDiv'>
         {addUsuario ? (
           <div>
-            <input id='addUsuarioArea' className='addUsuarioaArea' placeholder='Usuario'></input>
-            <input type='password' id='addSenhaArea' className='addSenhaArea' />
-              <select id='usuarioPapel'>
-                <option value="Administrador">Administrador</option>
-                <option value='Usuário'>Usuário</option>
-              </select>
-            <button className='addUsuarioButton' onClick={() => (addUsuarioAction())}>✔</button>
+            <input id='addUsuarioArea' className='addUsuarioArea' placeholder='Usuário'></input>
+            <input type='password' id='addSenhaArea' className='addUsuarioArea' placeholder='Senha' />
+            <select id='usuarioPapel' className='usuarioPapel'>
+              <option value="Administrador">Administrador</option>
+              <option value='Usuário'>Usuário</option>
+            </select>
             <button className='addUsuarioButton'  onClick={() => (setAddUsuario(false))}>🗙</button>
+            <button className='addUsuarioButton' onClick={() => (addUsuarioAction())}>✔</button>
           </div>
         ) : (
             <button className='addUsuario' onClick={() => (setAddUsuario(true))}>Adicionar Usuario</button>
