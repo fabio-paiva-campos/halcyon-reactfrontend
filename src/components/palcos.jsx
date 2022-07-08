@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PalcoService from '../services/PalcoService';
 import ArtistaService from '../services/ArtistaService';
-import { createId } from '../functions/createId';
+import KLJay from '../assets/KLJay.png';
 import { useAppContext } from '../hooks/context';
 import Cadastro from './cadastro';
 
@@ -147,8 +147,9 @@ function Palcos() {
   }
 
   function artistaDown(id, artista, filaPos, tempo, palco) {
-    let newArtista = {artista: artista, filaPos: filaPos, tempo: tempo, palco: palco}
-    console.log(filaPos)
+    let newFilaPos = Number(filaPos + 1)
+    console.log(newFilaPos)
+    let newArtista = {artista: artista, filaPos: newFilaPos, tempo: tempo, palco: {id: 1, palco: "Principal"}}
 
     ArtistaService.updateArtista(artista, id)
 
@@ -210,7 +211,7 @@ function Palcos() {
                 </div>
               )}
               <div className='tableArea'>
-                <label className='pic'></label>
+                <img className='pic' src={KLJay}></img>
                 <div className='list'>
                   <div className='playingDiv'>
                     <label className='playingLabel'>Tocando agora</label>
@@ -219,7 +220,7 @@ function Palcos() {
                         if(a.palco.palco === p.palco && a.filaPos == 0) {
                           return (
                             <div key={a.id} className='playingArtista'>{a.artista}
-                              <button className='artistaPos' onClick={() => (artistaDown(a.id, a.artista, a.filaPos + 1, a.tempo, a.palco))}>⏷</button>
+                              <button className='artistaPos' onClick={() => (artistaDown(a.id, a.artista, a.filaPos, a.tempo, a.palco))}>⏷</button>
                             </div>
                           )
                         }
@@ -246,8 +247,8 @@ function Palcos() {
                               <li key={a.id} className='labelSecondary'>{a.artista}
                                 <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>
                                 <button className='artistaButton' onClick={() => (setEditArtista(true), setSelectedArtista(a.id))}>🖊</button>
-                                <button className='artistaButton' onClick={() => (artistaDown(a.id, a.artista, a.filaPos + 1, a.tempo, a.palco))}>⏷</button>
-                                <button className='artistaButton' onClick={() => (artistaUp(a.id, a.artista, a.filaPos - 1, a.tempo, a.palco))}>🞁</button>
+                                <button className='artistaButton' onClick={() => (artistaDown(a.id, a.artista, a.filaPos, a.tempo, a.palco))}>⏷</button>
+                                <button className='artistaButton' onClick={() => (artistaUp(a.id, a.artista, a.filaPos, a.tempo, a.palco))}>🞁</button>
                               </li>
                             )}  
                           </>
