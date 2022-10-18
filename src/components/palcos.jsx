@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 import PalcoService from '../services/PalcoService';
-import ArtistaService from '../services/ArtistaService';
+import EventoService from '../services/EventoService';
 import KLJay from '../assets/KLJay.png';
 import { useAppContext } from '../hooks/context';
 import Cadastro from './cadastro';
 
 function Palcos() {
   const [palcos, setPalcos] = useState([])
-  const [artistas, setArtistas] = useState([])
+  const [eventos, setEventos] = useState([])
   const [addPalco, setAddPalco] = useState(false)
-  const [addArtista, setAddArtista] = useState(false)
+  const [addEvento, setAddEvento] = useState(false)
   const [editPalco, setEditPalco] = useState(false)
   const [selectedPalco, setSelectedPalco] = useState(0)
-  const [editArtista, setEditArtista] = useState(false)
-  const [selectedArtista, setSelectedArtista] = useState(0)
+  const [editEvento, setEditEvento] = useState(false)
+  const [selectedEvento, setSelectedEvento] = useState(0)
   const [admin, setAdmin] = useAppContext()
   const [cadastro, setCadastro] = useState(false)
 
   useEffect(() => {
     PalcoService.getPalco().then((res) => {setPalcos(res.data)})
-    ArtistaService.getArtista().then((res) => {setArtistas(res.data)})
+    EventoService.getEvento().then((res) => {setEventos(res.data)})
   }, [])
 
   function addPalcoAction(){
@@ -55,15 +55,15 @@ function Palcos() {
   }
 
   function deletePalcoAction(id){
-    artistas.map((artista) => {
-        if (artista.palco.id === id) {
-            ArtistaService.deleteArtista(artista.id)
-            deleteArtista(artista.id)
+    eventos.map((evento) => {
+        if (evento.palco.id === id) {
+            EventoService.deleteEvento(evento.id)
+            deleteEvento(evento.id)
         }
     })
 
     let palcosFinal = [...palcos]
-    if(window.confirm('Excluir Palco? Isso também excluirá todas os artistas que estão nele')) {
+    if(window.confirm('Excluir Palco? Isso também excluirá todas os eventos que estão nele')) {
         PalcoService.deletePalco(id)
         palcosFinal.forEach((palco, index) => {
             if (palco.id === id) {
@@ -74,8 +74,8 @@ function Palcos() {
     }
   }
 
-  function addArtistaAction(id){
-    let artistaValue = document.getElementById("addArtistaArea").value
+  function addEventoAction(id){
+    let eventoValue = document.getElementById("addEventoArea").value
 
     let palcoSelect = {}
     palcos.map((palco) => {
@@ -84,19 +84,19 @@ function Palcos() {
         }
     })
 
-    let artista = {artista: artistaValue, filaPos: artistas.length + 1, tempo: 1, palco: palcoSelect}
+    let Evento = {evento: eventoValue, filaPos: Number(eventos.length + 1), tempo: 1, palco: palcoSelect}
 
-    ArtistaService.createArtista(artista)
-    setAddArtista(false)
+    EventoService.createEvento(Evento)
+    setAddEvento(false)
 
-    let artistasFinal = [...artistas]
-    artistasFinal.push(artista)
-    setArtistas(artistasFinal)
+    let eventosFinal = [...eventos]
+    eventosFinal.push(Evento)
+    setEventos(eventosFinal)
   }
 
-  function editArtistaAction(id, filaPos){
-    let artistaValue = document.getElementById("editArtistaArea").value
-    let palcoValue = document.getElementById("artistaPalco").value
+  function editEventoAction(id, filaPos, tempo){
+    let eventoValue = document.getElementById("editEventoArea").value
+    let palcoValue = document.getElementById("EventoPalco").value
 
     let palcoSelect = {}
     palcos.map((palco) => {
@@ -105,78 +105,82 @@ function Palcos() {
       }
     })
 
-    let artista = {id: id, artista: artistaValue, filaPos: filaPos, tempo: 1, palco: palcoSelect}
+    let evento = {id: id, evento: eventoValue, filaPos: filaPos, tempo: tempo, palco: palcoSelect}
 
-    ArtistaService.updateArtista(artista, id)
-    setEditArtista(false)
+    EventoService.updateEvento(evento, id)
 
-    let artistasFinal = [...artistas]
-    artistasFinal.forEach((artista) => {
-        if(artista.id === id) {
-            artista.artista = artistaValue
-            artista.palco = palcoSelect
+    let eventosFinal = [...eventos]
+    eventosFinal.forEach((e) => {
+        if(e.id === id) {
+            e.evento = eventoValue
+            e.palco = palcoSelect
         }
     })
 
-    setArtistas(artistasFinal)
-    setEditArtista(false)
+    setEventos(eventosFinal)
+    setEditEvento(false)
   }
 
-  function deleteArtista(id){
-    let artistasFinal = [...artistas]
-    ArtistaService.deleteArtista(id)
-    artistasFinal.forEach((artista, index) => {
-        if (artista.id === id) {
-            artistasFinal.splice(index, 1)
+  function deleteEvento(id){
+    let eventosFinal = [...eventos]
+    EventoService.deleteEvento(Number(id))
+    eventosFinal.forEach((evento, index) => {
+        if (evento.id === id) {
+            eventosFinal.splice(index, 1)
         }
     })
-    setArtistas(artistasFinal)
+    setEventos(eventosFinal)
   }
 
-  function deleteArtistaAction(id){
-    let artistasFinal = [...artistas]
-    if(window.confirm('Excluir Artista?')) {
-        ArtistaService.deleteArtista(id)
-        artistasFinal.forEach((artista, index) => {
-            if (artista.id === id) {
-                artistasFinal.splice(index, 1)
+  function deleteEventoAction(id){
+    let eventosFinal = [...eventos]
+    if(window.confirm('Excluir Evento?')) {
+        EventoService.deleteEvento(id)
+        eventosFinal.forEach((evento, index) => {
+            if (evento.id === id) {
+                eventosFinal.splice(index, 1)
             }
         })
-        setArtistas(artistasFinal)
+        setEventos(eventosFinal)
     }
   }
 
-  function artistaDown(id, artista, filaPos, tempo, palco) {
-    let newFilaPos = Number(filaPos + 1)
-    console.log(newFilaPos)
-    let newArtista = {artista: artista, filaPos: newFilaPos, tempo: tempo, palco: {id: 1, palco: "Principal"}}
+  function eventoDown(id, evento, filaPos, tempo, palco) {
+    let newFilaPos
 
-    ArtistaService.updateArtista(artista, id)
+    if(Number(filaPos) < Number(eventos.length)) {
+      newFilaPos = filaPos + 1
+    } else {
+      newFilaPos = filaPos
+    }
 
-    let artistasFinal = [...artistas]
-    artistasFinal.forEach((artista) => {
-      if(artista.id === id) {
-        artista = newArtista
+    let newEvento = {id: id, evento: evento, filaPos: Number(newFilaPos), tempo: tempo, palco: palco}
+
+    EventoService.updateEvento(newEvento, id)
+
+    let eventosFinal = [...eventos]
+    eventosFinal.forEach((e) => {
+      if(e.id === id) {
+        e.filaPos = newFilaPos
       }
     })
 
-    setArtistas(artistasFinal)
+    setEventos(eventosFinal)
   }
 
-  function artistaUp(id, artista, filaPos, tempo, palco) {
-    let newArtista = {artista: artista, filaPos: filaPos, tempo: tempo, palco: palco}
-    console.log(filaPos)
+  function eventoUp(id, evento, filaPos, tempo, palco) {
+    let newEvento = {id: id, evento: evento, filaPos: Number(filaPos - 1), tempo: tempo, palco: palco}
 
-    ArtistaService.updateArtista(artista, id)
+    EventoService.updateEvento(newEvento, id)
 
-    let artistasFinal = [...artistas]
-    artistasFinal.forEach((artista) => {
-      if(artista.id === id) {
-        artista = newArtista
+    let eventosFinal = [...eventos]
+    eventosFinal.forEach((e) => {
+      if(e.id === id) {
+        e.filaPos = Number(filaPos - 1)
       }
     })
 
-    setArtistas(artistasFinal)
+    setEventos(eventosFinal)
   }
 
   return (
@@ -211,16 +215,15 @@ function Palcos() {
                 </div>
               )}
               <div className='tableArea'>
-                <img className='pic' src={KLJay}></img>
                 <div className='list'>
                   <div className='playingDiv'>
                     <label className='playingLabel'>Tocando agora</label>
                     <div>
-                        {artistas.map((a) => {
-                        if(a.palco.palco === p.palco && a.filaPos == 0) {
+                        {eventos.map((a) => {
+                        if(a.palco.palco === p.palco && a.filaPos == 1) {
                           return (
-                            <div key={a.id} className='playingArtista'>{a.artista}
-                              <button className='artistaPos' onClick={() => (artistaDown(a.id, a.artista, a.filaPos, a.tempo, a.palco))}>⏷</button>
+                            <div key={a.id} className='playingEvento'>{a.evento}
+                              <button className='EventoPos' onClick={() => (eventoDown(a.id, a.evento, a.filaPos, a.tempo, a.palco))}>⏷</button>
                             </div>
                           )
                         }
@@ -228,27 +231,27 @@ function Palcos() {
                     </div>
                   </div>
                   <ul className='nextList'>Próximos
-                    {artistas.map((a) => {
-                      if(a.palco.palco === p.palco && a.filaPos != 0) {
+                    {eventos.map((a) => {
+                      if(a.palco.palco === p.palco && a.filaPos != 1) {
                         return (
                           <>
-                            {editArtista && selectedArtista === a.id ? (
-                              <div className='editArtistaDiv'>
-                                <input key={a.id} id='editArtistaArea' className='editArtistaArea' defaultValue={a.artista} autoFocus></input>
-                                <button className='artistaButton'  onClick={() => (setEditArtista(false))}>🗙</button>
-                                <button className='artistaButton' onClick={() => (editArtistaAction(selectedArtista, a.filaPos, a.palco.id))}>✔</button>
-                                <select id='artistaPalco' className='artistaPalco'>
+                            {editEvento && selectedEvento === a.id ? (
+                              <div className='editEventoDiv'>
+                                <input key={a.id} id='editEventoArea' className='editEventoArea' defaultValue={a.evento} autoFocus></input>
+                                <button className='EventoButton'  onClick={() => (setEditEvento(false))}>🗙</button>
+                                <button className='EventoButton' onClick={() => (editEventoAction(selectedEvento, a.filaPos, a.palco.id, a.tempo))}>✔</button>
+                                <select id='EventoPalco' className='EventoPalco'>
                                   {palcos.map((p) => { return (
-                                    <option className='artistaPalcoOption' key={p.id}>{p.palco}</option>
+                                    <option className='EventoPalcoOption' key={p.id}>{p.palco}</option>
                                   )})}
                                 </select>
                               </div>
                             ) : (
-                              <li key={a.id} className='labelSecondary'>{a.artista}
-                                <button className='artistaButton' onClick={() => (deleteArtistaAction(a.id))}>🗙</button>
-                                <button className='artistaButton' onClick={() => (setEditArtista(true), setSelectedArtista(a.id))}>🖊</button>
-                                <button className='artistaButton' onClick={() => (artistaDown(a.id, a.artista, a.filaPos, a.tempo, a.palco))}>⏷</button>
-                                <button className='artistaButton' onClick={() => (artistaUp(a.id, a.artista, a.filaPos, a.tempo, a.palco))}>🞁</button>
+                              <li key={a.id} className='labelSecondary'>{a.evento}
+                                <button className='EventoButton' onClick={() => (deleteEventoAction(a.id))}>🗙</button>
+                                <button className='EventoButton' onClick={() => (setEditEvento(true), setSelectedEvento(a.id))}>🖊</button>
+                                <button className='EventoButton' onClick={() => (eventoDown(a.id, a.evento, a.filaPos, a.tempo, a.palco))}>⏷</button>
+                                <button className='EventoButton' onClick={() => (eventoUp(a.id, a.evento, a.filaPos, a.tempo, a.palco))}>🞁</button>
                               </li>
                             )}  
                           </>
@@ -256,15 +259,15 @@ function Palcos() {
                       }
                     })}
                   </ul>
-                  <div className='addArtistaDiv'>
-                    {addArtista && selectedPalco === p.id ? (
+                  <div className='addEventoDiv'>
+                    {addEvento && selectedPalco === p.id ? (
                       <div>
-                        <input id='addArtistaArea' className='addArtistaArea' placeholder='Nome do Artista'></input>
-                        <button className='addArtistaButton' onClick={() => (addArtistaAction(selectedPalco))}>✔</button>
-                        <button className='addArtistaButton'  onClick={() => (setAddArtista(false))}>🗙</button>
+                        <input id='addEventoArea' className='addEventoArea' placeholder='Nome do Evento'></input>
+                        <button className='addEventoButton' onClick={() => (addEventoAction(selectedPalco))}>✔</button>
+                        <button className='addEventoButton'  onClick={() => (setAddEvento(false))}>🗙</button>
                       </div>
                     ) : (
-                        <button className='addArtista' onClick={() => (setAddArtista(true), setSelectedPalco(p.id))}>Adicionar Artista</button>
+                      <button className='addEvento' onClick={() => (setAddEvento(true), setSelectedPalco(p.id))}>Adicionar Evento</button>
                     )}
                   </div>
                 </div>

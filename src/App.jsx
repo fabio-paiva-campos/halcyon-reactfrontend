@@ -1,6 +1,7 @@
 import { ContextWrap } from './hooks/context'
 import Layout from './components/layout'
-import './styles/style.scss'
+import './styles/login.scss'
+import './styles/palcos.scss'
 
 function App() {
   return (

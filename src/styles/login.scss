@@ -1,0 +1,38 @@
+.loginContainer {
+    background: linear-gradient(135deg, rgba(255,255,255,0) 5%, rgb(44, 44, 44, 0.8) 5%,
+                                        rgb(43, 43, 43, 0.8) 95%, rgba(255,255,255,0) 95%);
+    padding: 20px;
+
+    .login {
+        .loginLabel {
+            color: white;
+            margin-left: 42px;
+        }
+
+        .loginForm {
+            list-style: none;
+
+            .textArea {
+                background-color: black;
+                padding: 5px;
+                border-style: none;
+                margin-bottom: 10px;
+                color: white;
+            }
+
+            .loginButton {
+                background-color: transparent;
+                color: white;
+                padding: 10px;
+                font-size: 18px;
+                border-style: none;
+                cursor: pointer;
+                transition: 0.2s ease;
+            }
+
+            .loginButton:hover {
+                background-color: rgb(24, 24, 24);
+            }
+        }
+    }
+}
