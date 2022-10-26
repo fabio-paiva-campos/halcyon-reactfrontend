@@ -1,5 +1,5 @@
 body {
-    background: black;
+    background: rgb(0, 175, 152);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -144,12 +144,30 @@ body {
                         }
 
                         .EventoPos:hover {
-                            background-color: rgb(68, 68, 68);
+                            background-color: rgb(32, 32, 32);
+                        }
+
+                        .tempo {
+                            margin-left: 10px;
+                            margin-right: 20px;
+                        }
+
+                        .start {
+                            background-color: black;
+                            color: white;
+                            font-size: 16px;
+                            padding: 5px;
+                            transition: 0.2s ease;
+                        }
+
+                        .start:hover {
+                            cursor: pointer;
+                            background-color: rgb(32, 32, 32);
                         }
                     }
 
                     .playingEvento:hover {
-                        background-color: rgb(88, 88, 88);;
+                        background-color: rgb(58, 58, 58);;
                     }
                 }
 
