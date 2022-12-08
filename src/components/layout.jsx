@@ -7,8 +7,6 @@ function Layout() {
     const [logged, setLogged] = useAppContext()
     const [adminAccess, setAdminAccess] = useAppContext()
 
-    console.log(adminAccess)
-
     return (
         <>
             {logged ? (

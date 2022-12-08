@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { auth } from './PalcoService';
 
-const API = "http://localhost:8080/api/usuarios";
+const API = "https://warm-beyond-20336.herokuapp.com/api/usuarios";
 
 class UsuarioService {
 

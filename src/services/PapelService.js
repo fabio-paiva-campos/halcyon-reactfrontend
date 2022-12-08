@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = "http://localhost:8080/api/papeis";
+const API = "https://warm-beyond-20336.herokuapp.com/api/papeis";
 
 export const auth = {headers: {authorization: 'Basic ' + window.btoa("admin" + ":" + "1234") } }
 
