@@ -39,26 +39,24 @@ function Login() {
         let usuarioValue = document.getElementById("loginInputUser").value
         let senhaValue = document.getElementById("loginInputPassword").value
 
-        let flag = false
-
-        users.forEach((user) => {
+        users.every((user) => {
             if(user.usuario == usuarioValue) {
                 if(bcrypt.compareSync(senhaValue, user.senha) === true) {
-                    setLogged(true)
-                    flag = true
-                    if(user.papel === {id: 1, papel: "Administrador"}) {
-                        setAdmin(true)
-                        console.log(admin)
+                    if(user.papel = {id: 1, papel: "Administrador"}) {
+                        setAdmin(false)
+                        setLogged(true)
+                        return false
+                    } else if(user.papel = {id: 2, papel: "Usuário"}){
+                        setAdmin(false)
+                        setLogged(true)
+                        return false
                     }
                 } else {
                     alert("Senha incorreta")
-                    flag = true
                 }
             } else {
-                if(flag == false){
-                    alert("Usuário não existe")
-                    flag = true
-                }
+                alert("Usuário não existe")
+                return true
             }
         })
     }

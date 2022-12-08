@@ -25,11 +25,12 @@ export default function addEventoAction(id, palcos, eventos, setAddEvento, setEv
     })
 
     let Evento = {evento: eventoValue, filaPos: Number(eventos.length + 1), tempo: tempo, palco: palcoSelect}
+    let EventoId = {id: Math.random(), evento: eventoValue, filaPos: Number(eventos.length + 1), tempo: tempo, palco: palcoSelect}
 
     EventoService.createEvento(Evento)
     setAddEvento(false)
 
     let eventosFinal = [...eventos]
-    eventosFinal.push(Evento)
+    eventosFinal.push(EventoId)
     setEventos(eventosFinal)
 }

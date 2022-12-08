@@ -1,15 +1,24 @@
 import { useAppContext } from '../hooks/context'
 import Login from './login'
 import Palcos from './palcos'
-import Cadastro from './cadastro'
+import PalcosUser from './palcosUser'
 
 function Layout() {
     const [logged, setLogged] = useAppContext()
+    const [adminAccess, setAdminAccess] = useAppContext()
+
+    console.log(adminAccess)
 
     return (
         <>
             {logged ? (
-                <Palcos/>
+                <>
+                    {adminAccess ? (
+                        <Palcos/>
+                    ) : (
+                        <PalcosUser/>
+                    )}
+                </>
             ) : (
                 <Login/>
             )}

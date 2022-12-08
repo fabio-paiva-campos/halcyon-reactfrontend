@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import PalcoService from '../services/PalcoService';
 import EventoService from '../services/EventoService';
-import Cadastro from './cadastro';
 import addPalcoAction from '../functions/addPalcoAction';
 import editPalcoAction from '../functions/editPalcoAction';
 import deletePalcoAction from '../functions/deletePalco';
@@ -9,7 +8,7 @@ import addEventoAction from '../functions/addEvento';
 import editEventoAction from '../functions/editEvento';
 import deleteEventoAction from '../functions/deleteEvento';
 
-function Palcos() {
+function PalcosUser() {
   const [palcos, setPalcos] = useState([])
   const [eventos, setEventos] = useState([])
   const [addPalco, setAddPalco] = useState(false)
@@ -18,7 +17,6 @@ function Palcos() {
   const [selectedPalco, setSelectedPalco] = useState(0)
   const [editEvento, setEditEvento] = useState(false)
   const [selectedEvento, setSelectedEvento] = useState(0)
-  const [cadastro, setCadastro] = useState(false)
   
   const [timer, setTimer] = useState('00:00:00')
   
@@ -123,10 +121,6 @@ function Palcos() {
       ) : (
         <button className='addPalcoIcon' onClick={() => (setAddPalco(!addPalco))}>+</button>
       )}
-      <button  className='toggle' onClick={() => (setCadastro(!cadastro))}>Usuários</button>
-      {cadastro ? (
-        <Cadastro/>
-      ) : (
         <div>
           {palcos.map((p) => {return(
             <div key={p.id} className="palcoDiv">
@@ -210,9 +204,8 @@ function Palcos() {
             </div>
           )})}
         </div>
-      )}
     </div>
   )
 }
 
-export default Palcos;
+export default PalcosUser;

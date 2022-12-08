@@ -1,12 +1,10 @@
 import PalcoService from '../services/PalcoService';
 import EventoService from '../services/EventoService';
-import deleteEvento from './deleteEvento';
 
-export default function deletePalcoAction(id, eventos, palcos, setPalcos, setEventos) {
+export default function deletePalcoAction(id, eventos, palcos, setPalcos) {
     eventos.map((evento) => {
         if (evento.palco.id === id) {
             EventoService.deleteEvento(evento.id)
-            deleteEvento(evento.id, eventos, setEventos)
         }
     })
 
